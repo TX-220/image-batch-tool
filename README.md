@@ -4,6 +4,14 @@ Formerly **Image-Batch-Processor**. Same production batch tools — **cosmic pur
 
 Complete, production-grade **CLI + GUI** for batch processing **images and videos**.
 
+## Screenshots
+
+| Main UI | Options + log |
+|:-------:|:-------------:|
+| ![Main UI](docs/screenshots/01-main-ui.png) | ![Options and log](docs/screenshots/02-options-log.png) |
+
+---
+
 **⚠️⚠️⚠️ IMPORTANT WARNINGS (READ THIS FIRST) ⚠️⚠️⚠️**
 
 **--overwrite (default: False)**

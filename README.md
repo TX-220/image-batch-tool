@@ -1,6 +1,8 @@
-# Image Batch Processor
+# Nasty Batch Pit
 
-Complete, production-grade command-line tool for batch processing images.
+Formerly **Image-Batch-Processor**. Same production batch tools — **cosmic purple / hot magenta** night-ops skin (GUI).
+
+Complete, production-grade **CLI + GUI** for batch processing **images and videos**.
 
 **⚠️⚠️⚠️ IMPORTANT WARNINGS (READ THIS FIRST) ⚠️⚠️⚠️**
 
@@ -8,7 +10,7 @@ Complete, production-grade command-line tool for batch processing images.
 - False (default): Results are saved as separate files with suffixes like `_compressed`, `_resized`, `_trimmed`, `_muted`. Originals remain untouched.
 - True: **Overwrite in place** (Input = Output, same base name). **Especially dangerous for videos**. Original video files can be lost or corrupted.
 
-**--delete-ext (e.g. --delete-ext jpg,jpeg)**
+**--delete-ext (e.g. --delete-ext jpg,jpeg,jfif)**
 Deletes the original files with the listed extensions **after successful processing**.
 **Even in dry-run it only simulates**; a real run permanently removes the source files. Always keep backups.
 
@@ -42,24 +44,15 @@ A single bad file never aborts the whole run. Partial output files are cleaned u
 
 ## Installation
 
-It's recommended to keep projects under `~/dev/` to avoid cluttering your home directory.
-
 ```bash
-cd ~/dev/image-batch-tool
+git clone https://github.com/TX-220/nasty-batch-pit.git
+cd nasty-batch-pit
 pip install -r requirements.txt
-```
-
-Or directly:
-
-```bash
-pip install Pillow tqdm
-```
-
-Make the script executable (recommended):
-
-```bash
+# or: pip install Pillow tqdm
 chmod +x image_batch.py
 ```
+
+> **Rename note:** GitHub redirects `TX-220/Image-Batch-Processor` → `TX-220/nasty-batch-pit`.
 
 ---
 
@@ -79,7 +72,7 @@ python image_batch.py --dir <directory> --action <strip_meta|rename|compress|com
 | `--dry-run`       | Preview only — nothing is written (delete-ext operations are also simulated) |
 | `--output`        | Destination dir (**strongly recommended to use a different folder than input for video operations**) |
 | `--overwrite`     | Default False. True = overwrite in-place (Input=Output). Video ops skip when same dir + overwrite. |
-| `--delete-ext`    | Comma-separated, e.g. `jpg,jpeg` — delete originals with these extensions after success (dangerous) |
+| `--delete-ext`    | Comma-separated, e.g. `jpg,jpeg,jfif` — delete originals with these extensions after success (dangerous) |
 
 ### strip_meta specific
 
@@ -143,36 +136,26 @@ All support --dry-run --recursive --output
 
 **Special note for video**: Never use --overwrite or --delete-ext with the same input/output directory. Use a separate output folder. Always dry-run first.
 
-## GUI (deliberately simple)
+## GUI (Nasty Batch Pit)
 
-The tool also includes a deliberately minimal Tkinter GUI for when you just want to get the job done quickly without typing commands.
-
-Launch it with:
+Tkinter GUI with the cosmic lewd night-ops theme — same engine as the CLI.
 
 ```bash
 python image_batch_gui.py
-```
-
-Or from the main script:
-
-```bash
-python image_batch.py --gui
 # or
+python image_batch.py --gui
 python image_batch.py -g
 ```
 
-### GUI Features (kept extremely simple on purpose)
-- Folder picker for Input
-- Optional Output folder (recommended for strip)
-- Choose action: Strip Metadata or Rename
-- Rename fields: Pattern, New Prefix, Start Number
-- Checkboxes for Recursive + Dry Run (default on for safety)
-- Live log window that shows exactly the same messages the CLI would print
-- Everything reuses the identical core logic — no behavioral difference
+### GUI features
+- **Browse…** for Input / Output folders (visible at default window width)
+- Actions: strip metadata, rename, compress image/video, resize, trim, mute
+- Parameters panel (quality, CRF, preset, size, trim times, …)
+- Recursive + Dry Run (default on) + overwrite safety
+- Live log (same messages as CLI)
+- Shared core logic — no behavioral split vs CLI
 
-The GUI is intentionally not fancy. It exists purely to make repetitive batch image tasks faster and less error-prone for humans who prefer clicking over typing for small jobs.
-
-CLI remains the primary and most reliable interface.
+CLI remains the primary interface for scripting and huge batches.
 
 ### Short Commands (ibg / ibb)
 

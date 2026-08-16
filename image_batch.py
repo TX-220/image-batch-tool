@@ -11,7 +11,7 @@ Features:
 - Dry-run mode for safe preview
 - Preserves directory structure when using --output with --recursive
 
-Supported formats: .jpg, .jpeg, .png, .tiff, .webp, .bmp
+Supported formats: .jpg, .jpeg, .jfif, .png, .tiff, .webp, .bmp, .gif
 
 Usage examples are in the accompanying README.md
 """
@@ -40,7 +40,9 @@ except ImportError:
 
 
 # Supported formats - images + videos
-SUPPORTED_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".tiff", ".webp", ".bmp", ".gif"}
+# .jfif = JPEG File Interchange Format (same codec family as .jpg/.jpeg)
+JPEG_EXTS = {".jpg", ".jpeg", ".jfif"}
+SUPPORTED_IMAGE_EXTS = JPEG_EXTS | {".png", ".tiff", ".webp", ".bmp", ".gif"}
 SUPPORTED_VIDEO_EXTS = {".mp4", ".mov", ".avi", ".mkv", ".wmv", ".flv", ".webm"}
 SUPPORTED_EXTS = SUPPORTED_IMAGE_EXTS | SUPPORTED_VIDEO_EXTS
 
@@ -205,11 +207,11 @@ def strip_metadata(
                 fmt = img.format
 
                 save_kwargs: dict = {}
-                if suffix in (".jpg", ".jpeg"):
+                if suffix in JPEG_EXTS:
                     if clean_img.mode in ("RGBA", "LA", "P"):
                         clean_img = clean_img.convert("RGB")
                     save_kwargs = {"quality": 95, "optimize": True, "exif": b""}
-                    fmt = fmt or "JPEG"
+                    fmt = "JPEG"
                 elif suffix == ".png":
                     save_kwargs = {"optimize": True}
                     fmt = fmt or "PNG"
@@ -684,7 +686,7 @@ def resize_media(
                         continue
                     im_resized = im.resize(new_size, Image.LANCZOS)
                     ext = mfile.suffix.lower()
-                    fmt = "JPEG" if ext in (".jpg", ".jpeg") else im.format or "PNG"
+                    fmt = "JPEG" if ext in JPEG_EXTS else im.format or "PNG"
                     if fmt == "JPEG" and im_resized.mode in ("RGBA", "P"):
                         im_resized = im_resized.convert("RGB")
                     im_resized.save(save_path, format=fmt)
